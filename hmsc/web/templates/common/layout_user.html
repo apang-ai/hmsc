@@ -2,19 +2,18 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>后台管理</title>
-    <link rel="stylesheet" href="{{ buildStaticUrl('/bootstrap/css/bootstrap.min.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台</title>
+    <link rel="stylesheet" href="{{ buildStaticUrl('/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ buildStaticUrl('/css/style.css') }}">
     {% block css %} {% endblock %}
 </head>
 <body>
-    {% block content %}{% endblock %}
+    {% block content %} {% endblock %}
 
 
-    <script src="{{ buildStaticUrl('/plugins/jquery-3.5.0.min.js') }}"></script>
-    <script src="{{ buildStaticUrl('/js/common.js') }}"></script>
-    {% block js %}{% endblock %}
-
+<script src="{{ buildStaticUrl('/plugins/jquery-3.5.0.min.js') }}"></script>
+<script src="{{ buildStaticUrl('/js/common.js') }}"></script>
+{% block js %}{% endblock %}
 </body>
-
 </html>
