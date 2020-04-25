@@ -11,9 +11,9 @@ import re
 判断用户是否已经登录
 '''
 def check_login():
-    print('检查登陆')
+
     cookies = request.cookies.get(app.config['AUTH_COOKIE_NAME'])
-    print('整体cookie', cookies)
+
     # auth_cookie = cookies[app.config['AUTH_COOKIE_NAME']] if app.config['AUTH_COOKIE_NAME'] in cookies else None
     # print('产生的cookie',auth_cookie)
     if cookies is None:
@@ -36,13 +36,13 @@ def check_login():
 
     if user_info.status != 1:
         return False
-    print('最后',user_info)
+
     return user_info
 
 
 @app.before_request
 def before_request():
-    print('开始')
+
     ignore_urls = app.config['IGNORE_URLS']
     ignore_check_login_urls = app.config['IGNORE_CHECK_LOGIN_URLS']
     path = request.path
@@ -56,7 +56,7 @@ def before_request():
         return
 
     user_info = check_login()
-    print('名字',user_info)
+
     g.current_user = None
     if user_info:
 

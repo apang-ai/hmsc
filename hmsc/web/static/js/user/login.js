@@ -10,8 +10,8 @@ var user_login_ops = {
                 alert("请求正在处理，请稍后再试~~~")
                 return;
             }
-            var login_name = $(".login_wrap input[name=login_name]").val()
-            var login_pwd = $(".login_wrap input[name=login_pwd]").val()
+            var login_name = $(".login_wrap input[name=login_name]").val();
+            var login_pwd = $(".login_wrap input[name=login_pwd]").val();
 
             // 前端校检
             if (login_name == undefined || login_name.length < 1){
@@ -32,7 +32,7 @@ var user_login_ops = {
                 dataType:'json',
                 success:function(resp){
                     btn_target.removeClass("disabled");
-                    console.log(resp)
+                    console.log(resp);
                     alert(resp.msg)
                 },
                 error:function(error){
