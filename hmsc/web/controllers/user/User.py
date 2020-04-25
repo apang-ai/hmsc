@@ -124,6 +124,7 @@ def resetPwd():
     db.session.commit()
 
     response = make_response(json.dumps({'code': 200, 'msg': '密码修改成功！~~~'}))
-    # Cookie中存入的信息是user_info.uid,user_info
-    response.set_cookie(app.config['AUTH_COOKIE_NAME'],"%s@%s" % (UserService.generateAuthCode(g.current_user), g.current_user.uid), 60 * 60 * 24 * 15)
+    # 修改完密码之后 删除原来的Cookie值  返回登录页面用户重新登录
+    # response.set_cookie(app.config['AUTH_COOKIE_NAME'],"%s@%s" % (UserService.generateAuthCode(g.current_user), g.current_user.uid), 60 * 60 * 24 * 15)
+    response.delete_cookie(app.config['AUTH_COOKIE_NAME'])
     return response
