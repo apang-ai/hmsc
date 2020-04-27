@@ -12,9 +12,8 @@ var user_reset_pwd = {
             }
 
             var old_pwd = $('#old_password').val();
-            console.log(old_pwd)
             var new_pwd = $('#new_password').val();
-            console.log(new_pwd)
+
             // 前段校验
             if (old_pwd == undefined || old_pwd.length < 1){
                 alert('请输入原密码！');
@@ -24,10 +23,14 @@ var user_reset_pwd = {
                 alert('请输入新密码！');
                 return
             }
+            if (new_pwd.length < 6){
+                alert('密码长度不得小于6位');
+                return
+            }
             if(old_pwd == new_pwd){
                 console.log(old_pwd);
                 console.log(new_pwd);
-                alert('修改后的密码与原密码相同无需修改 ^！^');
+                alert('两次密码不能相同 ^！^');
                 return
             }
             save_btn.addClass('disabled');

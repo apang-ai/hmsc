@@ -132,7 +132,9 @@ def resetPwd():
         resp['code'] = -1
         resp['msg'] = '请输入新密码！'
         return jsonify(resp)
-
+    if len(new_pwd) < 6:
+        resp['code'] = -1
+        resp['msg'] = '密码长度不能小于6位数'
     # 判断旧密码是与当前用户的密码一致
     user_old = g.current_user.login_pwd
     user_pwd = UserService.generatePwd(old_pwd, g.current_user.login_salt)
