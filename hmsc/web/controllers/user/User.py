@@ -118,7 +118,6 @@ def resetPwd():
         resp['code'] = -1
         resp['msg'] = '修改后的密码与原密码相同无需修改 ^！^'
 
-
     g.current_user.login_pwd = UserService.generateCreatePwd(new_pwd, g.current_user)
     db.session.add(g.current_user)
     db.session.commit()
