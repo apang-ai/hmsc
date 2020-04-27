@@ -43,6 +43,8 @@ def login():
         resp['code'] = -1
         resp['msg'] = "用户不存在"
         return jsonify(resp)
+    pwd = UserService.generatePwd(login_pwd, user_info.login_salt)
+    print('验证密码', pwd)
     # 判断密码
     if user_info.login_pwd != UserService.generatePwd(login_pwd, user_info.login_salt):
         resp['code'] = -1

@@ -1,18 +1,6 @@
-import hashlib, base64
+import hashlib, base64, random, string
 # from random import Random
 
-
-# 获取由16位随机大小写字母、数字组成的new_salt值 获取new_salt值
-# def create_salt(length=16):
-#     new_salt = ''
-#     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
-#     len_chars = len(chars) - 1
-#     random = Random()
-#     for i in range(length):
-#         # 每次从chars中随机取一位
-#         new_salt += chars[random.randint(0, len_chars)]
-#
-#     return new_salt
 
 class UserService():
 
@@ -43,3 +31,21 @@ class UserService():
         md5_obj.update(str.encode('utf-8'))
 
         return md5_obj.hexdigest()
+
+    # 获取由16位随机大小写字母、数字组成的new_salt值 获取new_salt值
+    @staticmethod
+    def generateSalt(length=16):
+
+        keylist = [random.choice((string.ascii_letters+string.digits)) for i in range(length)]
+
+        return (''.join(keylist))
+        # new_salt = ''
+        # chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+        # len_chars = len(chars) - 1
+        # random = Random()
+        # for i in range(length):
+        #     # 每次从chars中随机取一位
+        #     new_salt += chars[random.randint(0, len_chars)]
+        #
+        # return new_salt
+
