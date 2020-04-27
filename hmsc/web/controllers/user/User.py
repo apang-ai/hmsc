@@ -56,6 +56,7 @@ def login():
         return jsonify(resp)
 
     response = make_response(json.dumps({'code': 200, 'msg': '登录成功~~~'}))
+    # response(redirect(UrlManager.buildUrl('/')))
     # Cookie中存入的信息是user_info.uid,user_info
     response.set_cookie(app.config['AUTH_COOKIE_NAME'], "%s@%s" % (UserService.generateAuthCode(user_info), user_info.uid), 60 * 60 * 24 * 15)
     return response
@@ -63,12 +64,42 @@ def login():
 
 @router_user.route("/logout")
 def logout():
-    return "登出"
+    response = make_response(redirect(UrlManager.buildUrl('/user/login')))
+    response.delete_cookie(app.config['AUTH_COOKIE_NAME'])
+    return response
 
 
 @router_user.route("/edit", methods=['GET', 'POST'])
 def edit():
-    return ops_render("user/edit.html")
+    if request.method == 'GET':
+        return ops_render("user/edit.html")
+
+    # POST请求
+    resp = {
+        'code': 200,
+        'msg': '修改成功',
+        'data': {}
+    }
+    print('编辑 哈哈~~~~')
+    req = request.values
+    nickname = req['nickname']if 'nickname' in req else ''
+    email = req['email']if 'email' in req else ''
+
+    if nickname is None or len(nickname) < 1:
+        resp['code'] = -1
+        resp['msg'] = "请输入规范的nickname"
+        return jsonify(resp)
+    if email is None or len(email) < 1:
+        resp['code'] = -1
+        resp['msg'] = "请输入规范的email"
+        return jsonify(resp)
+    # g 对象获取用户信息
+    user_info = g.current_user
+    user_info.nickname = nickname
+    user_info.email = email
+    db.session.add(user_info)
+    db.session.commit()
+    return jsonify(resp)
 
 
 @router_user.route("/reset-pwd", methods=['GET', 'POST'])
@@ -104,9 +135,8 @@ def resetPwd():
 
     # 判断旧密码是与当前用户的密码一致
     user_old = g.current_user.login_pwd
-    print('老旧密码', user_old)
     user_pwd = UserService.generatePwd(old_pwd, g.current_user.login_salt)
-    print('原密码', user_pwd)
+
     # 判断密码
     if g.current_user.login_pwd != UserService.generatePwd(old_pwd, g.current_user.login_salt):
         resp['code'] = -1

@@ -20,7 +20,7 @@
                         <div class="profile-element text-center">
                             <img alt="image" width="30px" class="img-circle"
                                 src="{{ buildStaticUrl('/images/common/avatar.jpg') }}" />
-                            <p class="text-muted">Bruce</p>
+                            <p class="text-muted">{{ current_user.login_name }}</p>
                         </div>
                         <div class="logo-element">
                             <img alt="image" width="30px" class="img-circle"
@@ -77,13 +77,13 @@
                             <ul class="dropdown-menu dropdown-messages">
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        姓名：张三<a href="{{ buildUrl('/user/edit') }}" class="pull-right">编辑</a>
+                                        姓名：{{ current_user.login_name }}<a href="{{ buildUrl('/user/edit') }}" class="pull-right">编辑</a>
                                     </div>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        手机号码：1305999617
+                                        手机号码：{{ current_user.mobile }}
                                     </div>
                                 </li>
                                 <li class="divider"></li>

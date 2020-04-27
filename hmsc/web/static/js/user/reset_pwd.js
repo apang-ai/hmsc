@@ -7,7 +7,7 @@ var user_reset_pwd = {
         $('#save').click(function(){
             var save_btn = $(this);
             if(save_btn.hasClass('disabled')){
-                alert('请求正在处理！请稍后再试')
+                alert('请求正在处理！请稍后再试');
                 return;
             }
 
