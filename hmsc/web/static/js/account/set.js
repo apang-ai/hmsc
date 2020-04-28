@@ -1,88 +1,89 @@
 ;
 var account_set_ops = {
-    init:function () {
-        this.eventBind()
+    init:function(){
+        this.eventBind();
     },
     eventBind:function(){
-        $('.m-t .save').click(function(){
-            var btn_save = $(this);
-            if (btn_save.hasClass('disabled')){
-                alert('请求正在处理！请稍后再试~~~');
-                return
+        $(".wrap_account_set .save").click(function(){
+            var btn_target = $(this);
+            if( btn_target.hasClass("disabled") ){
+                common_ops.alert("正在处理!!请不要重复提交~~");
+                return;
             }
 
-            var uid = $('.m-t input[name=uid]').val();
-            console.log(uid.length)
-            var nickname = $('.m-t input[name=nickname]').val();
-            var mobile = $('.m-t input[name=mobile]').val();
-            var email = $('.m-t input[name=email]').val();
-            var login_name = $('.m-t input[name=login_name]').val();
-            var login_pwd = $('.m-t input[name=login_pwd]').val();
-            console.log(nickname)
-            console.log(mobile)
-            console.log(email)
-            console.log(login_name)
-            console.log(login_pwd)
+            var nickname_target = $(".wrap_account_set input[name=nickname]");
+            var nickname = nickname_target.val();
 
-            if (nickname == undefined || nickname.length < 1){
-                alert('请输入符合规范的昵称');
-                return
-            }
-            if (mobile == undefined || mobile.length < 11){
-                alert('请输入符合规范的手机号');
-                return
-            }
-            if (email == undefined || email.length < 1){
-                alert('请输入符合规范的邮箱');
-                return
-            }
-            if (login_name == undefined || login_name.length < 1){
-                alert('请输入符合规范的登录昵称');
-                return
-            }
-            if (login_pwd == undefined || login_pwd.length < 6){
-                alert('请输入符合规范的密码');
-                return
+            var mobile_target = $(".wrap_account_set input[name=mobile]");
+            var mobile = mobile_target.val();
+
+            var email_target = $(".wrap_account_set input[name=email]");
+            var email = email_target.val();
+
+            var login_name_target = $(".wrap_account_set input[name=login_name]");
+            var login_name = login_name_target.val();
+
+            var login_pwd_target = $(".wrap_account_set input[name=login_pwd]");
+            var login_pwd = login_pwd_target.val();
+
+            if( nickname.length < 1 ){
+                common_ops.tip( "请输入符合规范的姓名~~",nickname_target );
+                return false;
             }
 
-            btn_save.addClass('disabled');
-            if (uid.length >= 1){
-                $.ajax({
-                    url: common_ops.buildUrl('/account/set?id='+uid),
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'nickname': nickname, 'mobile': mobile, 'email': email, 'login_name': login_name, 'login_pwd':login_pwd},
-                    success: function(resp){
-                        btn_save.removeClass('disabled');
-                        console.log(resp);
-                        alert(resp.msg)
+            if( mobile.length < 1 ){
+                common_ops.tip( "请输入符合规范的手机号码~~",mobile_target );
+                return false;
+            }
 
-                    },
-                    error: function(error){
-                        console.log(error)
+            if(  email.length < 1 ){
+                common_ops.tip( "请输入符合规范的邮箱~~",email_target );
+                return false;
+            }
+
+            if( login_name.length < 1 ){
+                common_ops.tip( "请输入符合规范的登录用户名~~",login_name_target );
+                return false;
+            }
+
+            if( login_pwd.length < 6 ){
+                common_ops.tip( "请输入符合规范的登录密码~~",login_pwd_target );
+                return false;
+            }
+
+            btn_target.addClass("disabled");
+
+            var data = {
+                nickname: nickname,
+                mobile: mobile,
+                email: email,
+                login_name:login_name,
+                login_pwd:login_pwd,
+                id:$(".wrap_account_set input[name=id]").val()
+            };
+
+            $.ajax({
+                url:common_ops.buildUrl( "/account/set" ),
+                type:'POST',
+                data:data,
+                dataType:'json',
+                success:function( res ){
+                    btn_target.removeClass("disabled");
+                    var callback = null;
+                    if( res.code == 200 ){
+                        callback = function(){
+                            window.location.href = common_ops.buildUrl("/account/index");
+                        }
                     }
-                })
-            }else{
-                $.ajax({
-                    url: common_ops.buildUrl('/account/set'),
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'nickname': nickname, 'mobile': mobile, 'email': email, 'login_name': login_name, 'login_pwd':login_pwd},
-                    success: function(resp){
-                        btn_save.removeClass('disabled');
-                        console.log(resp);
-                        alert(resp.msg)
+                    common_ops.alert( res.msg,callback );
+                }
+            });
 
-                    },
-                    error: function(error){
-                        console.log(error)
-                    }
-                });
-            }
-        })
+
+        });
     }
 };
 
-$(document).ready(function(){
+$(document).ready( function(){
     account_set_ops.init();
-});
+} );
