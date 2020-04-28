@@ -4,7 +4,7 @@ from application import db
 from common.libs.Helper import ops_render, getCurrentDate
 from common.libs.UrlManager import UrlManager
 from common.libs.user.UserService import UserService
-from common.models.User import User
+from common.models.user import User
 
 router_account = Blueprint("account_page", __name__)
 
