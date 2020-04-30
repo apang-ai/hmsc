@@ -122,6 +122,7 @@ def set():
     resp = {'code': 200, 'msg': '操作成功~~', 'data': {}}
     req = request.values
     id = req['id'] if 'id' in req else 0
+    print(id)
     nickname = req['nickname'] if 'nickname' in req else ''
     if nickname is None or len(nickname) < 1:
         resp['code'] = -1

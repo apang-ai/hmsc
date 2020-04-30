@@ -23,7 +23,7 @@ var member_set_ops = {
 
             var data = {
                 nickname: nickname,
-                id:$(".wrap_account_set input[name=id]").val()
+                id:$(".wrap_member_set input[name=id]").val()
             };
 
             $.ajax({
