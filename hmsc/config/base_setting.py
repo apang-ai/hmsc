@@ -15,3 +15,9 @@ IGNORE_CHECK_LOGIN_URLS = [
 ]
 
 PAGE_SIZE = 2
+
+UPLOAD = {
+    'ext': ["png", "jpeg", "jpg", "gif", "bmp"],
+    'prefix_path': '\\web\\static\\upload',
+    'prefix_url': '\\static\\upload'
+}

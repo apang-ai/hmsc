@@ -3,7 +3,7 @@ from sqlalchemy import or_
 
 from common.libs.Helper import ops_render, getCurrentDate, iPagination, getDictFilterField, selectFilterObj
 from common.libs.UrlManager import UrlManager
-from common.models.goods.Goods import Good
+from common.models.goods.Goods import Goods
 from common.libs.user.UserService import UserService
 from common.models.member.Member import Member
 from common.models.member.MemberComment import MemberComment

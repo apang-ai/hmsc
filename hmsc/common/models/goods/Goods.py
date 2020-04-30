@@ -6,7 +6,7 @@ from application import db
 
 
 
-class Good(db.Model):
+class Goods(db.Model):
     __tablename__ = 'goods'
 
     id = db.Column(db.Integer, primary_key=True)
