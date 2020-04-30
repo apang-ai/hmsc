@@ -35,9 +35,20 @@ def uploadPic():
         'data': {}
     }
     pic = request.files['pic']
-    print(pic.filename)
-    print(app.root_path)
     root_path = app.root_path + app.config['UPLOAD']['prefix_path']
+
+    # 校验图片格式是否正确
+    pic_ext = app.config['UPLOAD']['ext']
+    # 获取文件后缀  .jpg ....
+    ext = os.path.splitext(pic.filename)[1]
+    if ext not in pic_ext:
+        resp = {
+            'code': -1,
+            'msg': '该图片格式不符合要求！',
+            'data': {}
+        }
+        print(resp)
+        return jsonify(resp)
 
     file_dir = datetime.datetime.now().strftime('%Y%m%d')
 
